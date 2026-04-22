@@ -1,0 +1,83 @@
+/* Background */
+body {
+    background-color: #cfe9ff; /* light blue */
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #2b3a42; /* changed from black to a softer dark blue-gray */
+    text-align: center; /* centers most text */
+}
+
+/* Main title */
+.header {
+    background-color: #4aa3df;
+    text-align: center;
+    padding: 20px;
+    color: white;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+/* Section title */
+h3 {
+    text-align: center;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Video container */
+.video-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Content layout */
+.container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+/* Boxes */
+.box {
+    background-color: #4aa3df;
+    width: 30%;
+    padding: 15px;
+    border-radius: 12px;
+    color: white;
+    font-family: Verdana, sans-serif;
+    text-align: center;
+}
+
+/* Keep lists readable (NOT centered) */
+ul, ol {
+    text-align: left;
+    display: inline-block; /* keeps them centered on page but text left-aligned */
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #4aa3df;
+    color: white;
+    font-family: Georgia, serif;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 images per row */
+    gap: 15px; /* space between images */
+    justify-items: center; /* centers images in each cell */
+}
+
+.image-grid img {
+    width: 100%; /* makes images fill their grid cell */
+    max-width: 200px; /* optional: controls image size */
+}
+.image-grid img {
+    width: 100%;
+    height: 200px;        /* all images same height */
+    object-fit: cover;    /* crops instead of stretching */
+    border-radius: 10px;  /* optional nice look */
+}

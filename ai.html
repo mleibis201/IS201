@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Word Guessing Game</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #cfe9ff;
+    margin: 0;
+}
+
+h1 {
+    background-color: #4aa3df;
+    color: white;
+    padding: 20px;
+    margin: 0;
+}
+
+input {
+    padding: 10px;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: #4aa3df;
+    color: white;
+}
+
+button:hover {
+    background-color: #2f7fb3;
+}
+
+#board {
+    margin-top: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+}
+
+.tile {
+    width: 45px;
+    height: 45px;
+    border: 2px solid #333;
+    margin: 2px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Colors */
+.correct {
+    background-color: #6aaa64;
+    color: white;
+}
+
+.present {
+    background-color: #c9b458;
+    color: white;
+}
+
+.absent {
+    background-color: #787c7e;
+    color: white;
+}
+
+/* Popup */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 300px;
+}
+.button-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #4aa3df;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.button-link:hover {
+    background-color: #2f7fb3;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Word Guessing Game</h1>
+
+<h3>Guess the 5-letter word (6 tries)</h3>
+
+<input id="guessInput" maxlength="5" placeholder="Enter word">
+<button onclick="submitGuess()">Guess</button>
+
+<div id="board"></div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h2 id="popupText"></h2>
+        <button onclick="closePopup()">Play Again</button>
+    </div>
+</div>
+
+<script>
+
+const words = ["APPLE", "BRAVE", "CRANE", "PLANT", "SHINE"];
+let answer = words[Math.floor(Math.random() * words.length)];
+
+let attempts = 0;
+const maxAttempts = 6;
+
+function submitGuess() {
+    const input = document.getElementById("guessInput");
+    let guess = input.value.toUpperCase();
+
+    if (guess.length !== 5) return;
+
+    if (attempts >= maxAttempts) return;
+
+    createRow(guess);
+    attempts++;
+
+    if (guess === answer) {
+        showPopup("🎉 You won! The word was " + answer);
+        return;
+    }
+
+    if (attempts === maxAttempts) {
+        showPopup("💀 You lost! The word was " + answer);
+    }
+
+    input.value = "";
+}
+
+function createRow(guess) {
+    const board = document.getElementById("board");
+    const row = document.createElement("div");
+    row.classList.add("row");
+
+    let answerLetters = answer.split("");
+
+    let result = Array(5).fill("absent");
+
+    // First pass: correct letters
+    for (let i = 0; i < 5; i++) {
+        if (guess[i] === answer[i]) {
+            result[i] = "correct";
+            answerLetters[i] = null;
+        }
+    }
+
+    // Second pass: present letters
+    for (let i = 0; i < 5; i++) {
+        if (result[i] === "correct") continue;
+
+        let index = answerLetters.indexOf(guess[i]);
+        if (index !== -1) {
+            result[i] = "present";
+            answerLetters[index] = null;
+        }
+    }
+
+    // Build tiles
+    for (let i = 0; i < 5; i++) {
+        let tile = document.createElement("div");
+        tile.classList.add("tile", result[i]);
+        tile.innerText = guess[i];
+        row.appendChild(tile);
+    }
+
+    board.appendChild(row);
+}
+
+/* POPUP */
+function showPopup(text) {
+    document.getElementById("popupText").innerText = text;
+    document.getElementById("popup").style.display = "flex";
+}
+
+function closePopup() {
+    location.reload();
+}
+
+</script>
+
+<a href="fromScratch.html" class="button-link">
+    Back to Chiapas Tourism Page
+</a>
+</body>
+</html>
